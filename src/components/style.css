@@ -8,29 +8,16 @@ body{
     background-color: white;
     border-radius: 5px;
     box-shadow: 5px 5px 5px  #416b39;
-    width: 550px;
+    width: 50%;
     margin: 20px auto;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     /* height: 600px; */
 }
 
-.form-body{
-    text-align: left;
-    padding: 20px 10px;
-}
-
-.form-body > *{
-    padding: 5px;
-}
-
-.form__label{
-    width: 40%;
-}
-
-.form_input{
-    width: 60%;
-}
-
-.footer{
-    text-align: center;
+.form div {
+    display: flex;
+    flex-direction: column;
 }

@@ -1,71 +1,88 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { useForm , Controller } from "react-hook-form";
+import "react-datepicker/dist/react-datepicker.css";
+
+import ReactDatePicker from "react-datepicker";
 import './style.css'
 function RegistrationForm() {
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [email, setEmail] = useState();
-    const [password,setPassword] = useState();
-    const [confirmPassword,setConfirmPassword] = useState();
 
-    const handleInputChange = (e) => {
-        const {id , value} = e.target;
-        if(id === "firstName"){
-            setFirstName(value);
-        }
-        if(id === "lastName"){
-            setLastName(value);
-        }
-        if(id === "email"){
-            setEmail(value);
-        }
-        if(id === "password"){
-            setPassword(value);
-        }
-        if(id === "confirmPassword"){
-            setConfirmPassword(value);
-        }
+    const { register,
+        handleSubmit,
+        control,
+        watch,
+        formState: { errors }
+    } = useForm();
 
-    }
+    const formSubmit = (data) => {
+        console.log("Form Submitted: ", data);
+    };
 
-    const handleSubmit  = () => {
-        console.log({
-            
-            "firstName" : firstName ,
-            "lastName" : lastName,
-            "email" : email,
-            "password" : password,
-            "confirmPassword" : confirmPassword
-        });
-    }
 
-    return(
-      <div className="form">
-          <div className="form-body">
-              <div className="username">
-                  <label className="form__label" htmlFor="firstName">First Name </label>
-                  <input className="form__input" value={firstName} onChange = {(e) => handleInputChange(e)} type="text" id="firstName" placeholder="First Name"/>
-              </div>
-              <div className="lastname">
-                  <label className="form__label" htmlFor="lastName">Last Name </label>
-                  <input  type="text" name="lastName" id="lastName" value={lastName} onChange = {(e) => handleInputChange(e)} className="form__input"placeholder="LastName"/>
-              </div>
-              <div className="email">
-                  <label className="form__label" htmlFor="email">Email </label>
-                  <input  type="email" id="email" value={email} onChange = {(e) => handleInputChange(e)} className="form__input" placeholder="Email"/>
-              </div>
-              <div className="password">
-                  <label className="form__label" htmlFor="password">Password </label>
-                  <input className="form__input" type="password" value={password} onChange = {(e) => handleInputChange(e)}  id="password" placeholder="Password"/>
-              </div>
-              <div className="confirm-password">
-                  <label className="form__label" htmlFor="confirmPassword">Confirm Password </label>
-                  <input className="form__input" type="password" value={confirmPassword} onChange = {(e) => handleInputChange(e)} id="confirmPassword" placeholder="Confirm Password"/>
-              </div>
-          </div>
-          <div className="footer">
-              <button onClick={()=>handleSubmit()} type="submit" className="btn btn-success">Register</button>
-          </div>
-      </div>      
-    )       
+
+    return (
+        <form onSubmit={handleSubmit(formSubmit)} className='form'>
+            <div>
+                <label htmlFor="email">Email:</label>
+                <input
+                    id="email"
+                    type="email"
+                    {...register("email", {
+                        required: "Email is required",
+                        pattern: {
+                            // Regex to validate email
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                            message: "Invalid email address"
+                        }
+                    })}
+                />
+                {errors.email && <span>{errors.email.message}</span>}
+            </div>
+            <div>
+            <label htmlFor="dateOfBirth">date Of Birth:</label>
+            <Controller
+          name="dateOfBirth"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <ReactDatePicker selected={field.value} onChange={field.onChange} />
+          )}
+        />
+            </div>
+
+            <div>
+                <label htmlFor="password">Password:</label>
+                <input
+                    id="password"
+                    type="password"
+                    {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                            value: 8,
+                            message: "Password must be at least 8 characters"
+                        }
+                    })}
+                />
+                {errors.password && <span>{errors.password.message}</span>}
+            </div>
+
+            <div>
+                <label htmlFor="confirmPassword">Confirm Password:</label>
+                <input
+                    id="confirmPassword"
+                    type="password"
+                    {...register("confirmPassword", {
+                        required: "Please confirm your password",
+                        validate: (value) =>
+                            value === watch("password") || "Passwords do not match"
+                    })}
+                />
+                {errors.confirmPassword && (
+                    <span>{errors.confirmPassword.message}</span>
+                )}
+            </div>
+
+            <button type="submit" className='btn btn-primary'>Register</button>
+        </form>
+    )
 }
 export default RegistrationForm;
