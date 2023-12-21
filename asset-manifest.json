@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Registration-Form-using-React/static/css/main.a656062b.css",
+    "main.js": "/Registration-Form-using-React/static/js/main.abba4882.js",
+    "static/js/787.a06557dc.chunk.js": "/Registration-Form-using-React/static/js/787.a06557dc.chunk.js",
+    "index.html": "/Registration-Form-using-React/index.html",
+    "main.a656062b.css.map": "/Registration-Form-using-React/static/css/main.a656062b.css.map",
+    "main.abba4882.js.map": "/Registration-Form-using-React/static/js/main.abba4882.js.map",
+    "787.a06557dc.chunk.js.map": "/Registration-Form-using-React/static/js/787.a06557dc.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a656062b.css",
+    "static/js/main.abba4882.js"
+  ]
+}
